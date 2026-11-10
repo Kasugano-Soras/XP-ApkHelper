@@ -11,7 +11,7 @@ Apple设备不认这个类型，会把文件当作`public.data` 处理，APK在�
 给 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。
 
 
-由于车机**不允许 `adb install`**（`isPlatSigned:false`），所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
+由于车机**不允许 `adb install`**（`isPlatSigned:false`），所以安装第三方 APK 只能把文件拷贝至Download → 再用命令调系统安装界面，略显繁琐。这个App就是把这套流程做成一个图形化操作界面。
 
 软件仅在P7（SA8295P）换芯版通过测试，其他机型请自测，不保证可用性。
 
