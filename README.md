@@ -3,7 +3,7 @@
 ## 来历
 本项目基于焕芯8295P_车友群内大佬分享的 `p7安装器1.0.apk`
 该版本WEB上传页的文件选择框把 `accept` 写为`.apk,application/vnd.android.package-archive`。
-APPLE设备不认这个类型，会把文件当作`public.data` 处理，APK 在选择器里被置灰，导致无法上传文件；
+Apple设备不认这个类型，会把文件当作`public.data` 处理，APK 在选择器里被置灰，导致无法上传文件；
 早期版本主要修改了 `accept` 与 `application/octet-stream`，将真正限制类型的地方挪到页面 JS 的后缀校验和车机端的400白名单校验。
 
 ## 简介
@@ -17,8 +17,8 @@ APPLE设备不认这个类型，会把文件当作`public.data` 处理，APK 在
 
 | 新增功能 | 说明 |
 |---|---|
-| APPLE设备支持 | 修复支持APPLE设备上传 |
-| 自动重命名 | 支持上传APK.1的文件自动改名回正确的 `.apk` |
+| Apple设备支持 | 支持APPLE设备上传文件 |
+| 自动重命名 | 支持上传`.apk.1`的文件自动改名回正确的 `.apk` |
 | 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download，两路按规范化路径去重后合并 |
 | 一键安装 | 用 `file://` + `PackageInstallerActivity` 调起系统安装界面，用户点「继续 → 更新」 |
 | 连接复用 | 一个 App 会话只与车机握手一次，后续安装复用同一条 adb 连接，避免每次点安装都弹 USB 调试授权 |
