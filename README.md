@@ -1,5 +1,7 @@
 # P7-ApkHelper（安装助手）
 
+本项目基于群内大佬发布的p7安装助手1.0.apk，该版本不支持IOS上传文件，故编译P7-ApkHelper并基于此进行更新与功能添加
+
 给小鹏 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。
 
 车机（E28U / `au8295_xp`，Android 12）**不允许 `adb install`**（`isPlatSigned:false`），也没有 root，所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
@@ -7,13 +9,14 @@
 
 ## 功能
 
-| 功能 | 说明 |
+| 新增功能 | 说明 |
 |---|---|
-| 手机上传 | App 内开一个 8080 端口的上传服务，手机连同一网络打开页面选文件上传，落到 `/sdcard/Download`；`.apk.1` 自动改名回 `.apk` |
+| IOS手机上传与APK.1支持 | 修复支持IOS上传文件落到 `/sdcard/Download`；`.apk.1` 并支持APK.1的文件自动改名回 `.apk` |
 | 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download 兜底，两路按规范化路径去重后合并 |
 | 一键安装 | 用 `file://` + `PackageInstallerActivity` 调起系统安装界面，用户点「继续 → 更新」 |
 | 连接复用 | 一个 App 会话只与车机握手一次，后续安装复用同一条 adb 连接，避免每次点安装都弹 USB 调试授权 |
-| 图标 | 五套密度（48/72/96/144/192）内建 |
+| 判定处理 | 支持文件的判定由客户端改为服务端。在Web判定仅允许APK APK.1文件上传 |
+| 自绘图标 | 五套密度（48/72/96/144/192）内建 |
 
 为什么列表要 adb 兜底：车机上 `MANAGE_EXTERNAL_STORAGE` 只能拿到 `default`，系统里没有「所有文件访问权限」的入口（连 `MANAGE_APP_ALL_FILES_ACCESS_PERMISSION` 这个 activity 都没有），所以 App 自己枚举文件时是空的，必须靠调试连接补一路。
 
