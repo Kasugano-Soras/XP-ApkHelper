@@ -17,14 +17,14 @@ Apple设备不认这个类型，会把文件当作`public.data` 处理，APK 在
 
 ## 功能
 
-| 新增功能 | 说明 |
+| 功能 | 说明 |
 |---|---|
 | Apple设备支持 | 支持APPLE设备上传文件 |
 | 自动重命名 | 支持上传`.apk.1`的文件自动改名回正确的 `.apk` |
 | 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download，两路按规范化路径去重后合并 |
 | 一键安装 | 用 `file://` + `PackageInstallerActivity` 调起系统安装界面，用户点「继续 → 更新」 |
 | 连接复用 | 一个 App 会话只与车机握手一次，后续安装复用同一条 adb 连接，避免每次点安装都弹 USB 调试授权 |
-| 判定处理 | 支持文件的判定由客户端改为服务端。在Web判定仅允许APK APK.1文件上传 |
+| 类型判定 | `accept` 不再收紧，改为页面 JS 后缀校验 + 车机端 400 白名单， |
 | 自绘图标 | 五套密度（48/72/96/144/192）内建 |
 
 
