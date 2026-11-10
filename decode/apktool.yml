@@ -1,0 +1,7 @@
+version: 3.0.3
+apkFileName: 小鹏p7安装器.apk
+sdkInfo:
+  minSdkVersion: 23
+doNotCompress:
+- arsc
+- dex

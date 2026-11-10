@@ -1,0 +1,28 @@
+I: Using Apktool 3.0.3 on 小鹏p7安装�?.apk with 8 threads
+I: AndroidManifest.xml has not changed.
+I: resources.arsc has not changed.
+I: Smaling smali folder into classes.dex...
+decode\smali\com\dsh\apkhelper\AdbShell.smali[70,4] Invalid register: v17. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[93,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[97,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[102,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[111,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[135,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[175,4] Invalid register: v18. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[199,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[276,4] Invalid register: v18. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[297,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[326,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[345,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[376,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[387,4] Invalid register: v18. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[389,4] Invalid register: v19. Must be between v0 and v15, inclusive.
+decode\smali\com\dsh\apkhelper\AdbShell.smali[420,4] There is already a label with that name.
+Exception in thread "main" brut.androlib.exceptions.AndrolibException: Could not smali file: D:\DoubaoProjects\chats\2026-11-05\new-chat\С��p7��װ��_����\decode\smali\com\dsh\apkhelper\AdbShell.smali
+	at brut.androlib.ApkBuilder.buildSourcesSmaliJob(SourceFile:77)
+	at brut.androlib.ApkBuilder.lambda$buildSourcesSmali$0(SourceFile:167)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)

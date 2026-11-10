@@ -1,0 +1,6 @@
+I: Using Apktool 3.0.3 on 小鹏p7安装�?.apk with 8 threads
+I: AndroidManifest.xml has not changed.
+I: resources.arsc has not changed.
+I: Smaling smali folder into classes.dex...
+I: Building apk file...
+I: Built apk into: D:\DoubaoProjects\chats\2026-11-05\new-chat\С��p7��װ��_����\build\apkhelper-1.1.3-unsigned.apk

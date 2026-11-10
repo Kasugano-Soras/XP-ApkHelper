@@ -1,0 +1,23 @@
+# 构建工具（随时可重新下载，进仓库只会撑大体积）
+apktool_*.jar
+uber-apk-signer.jar
+*.idsig
+
+# 签名密钥库与口令：绝不入库（仓库一旦泄露等于私钥泄露）
+*.jks
+*.keystore
+
+# 反编译/重打包的中间产物
+unsigned.apk
+classes_patched.dex
+META-INF/
+signed/
+signed_*/
+build/*.apk
+build/*.idsig
+
+# 编辑器与系统临时文件
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
