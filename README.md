@@ -4,7 +4,8 @@
 
 给小鹏 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。
 
-车机（E28U / `au8295_xp`，Android 12）**不允许 `adb install`**（`isPlatSigned:false`），也没有 root，所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
+由于车机**不允许 `adb install`**（`isPlatSigned:false`），也没有 root，所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
+
 软件仅在小鹏P7（SA8295P）换芯版通过测试，其他机型请自测，不保证可用性。
 
 ## 功能
