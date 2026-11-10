@@ -1,19 +1,26 @@
 # P7-ApkHelper（安装助手）
 
-本项目基于群内大佬发布的p7安装助手1.0.apk，该版本不支持IOS上传文件，故编译P7-ApkHelper并基于此进行更新与功能添加
+## 来历
 
-给小鹏 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。
+本项目基于焕芯8295P_车友群内大佬分享的 `p7安装器1.0.apk`原版上传页面的文件选择框把 `accept` 写为
+`.apk,application/vnd.android.package-archive`：苹果设备无法识别 `.apk` 这个类型，会把文件当作
+`public.data` 处理，不匹配白名单，APK 在选择器里直接被置灰，导致苹果设备无法上传任何文件；
+前期版本主要修改的地方是把 `accept` 放宽，真正限制类型的地方挪到页面 JS 的后缀校验和车机端的 400 白名单，两端就都能选文件，而落到车机上的仍只可能是 `.apk`。
+本仓库在原版基础上持续改到 1.20，具体改动见 [更新日志](更新日志.md)。
 
-由于车机**不允许 `adb install`**（`isPlatSigned:false`），也没有 root，所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
+给 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。同时支持上传微信下载的APK.1文件，自动重命名为正确后缀。
 
-软件仅在小鹏P7（SA8295P）换芯版通过测试，其他机型请自测，不保证可用性。
+由于车机**不允许 `adb install`**（`isPlatSigned:false`），所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
+
+软件仅在P7（SA8295P）换芯版通过测试，其他机型请自测，不保证可用性。
 
 ## 功能
 
 | 新增功能 | 说明 |
 |---|---|
-| IOS手机上传与APK.1支持 | 修复支持IOS上传文件落到 `/sdcard/Download`；`.apk.1` 并支持APK.1的文件自动改名回 `.apk` |
-| 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download 兜底，两路按规范化路径去重后合并 |
+| APPKE设备支持 | 修复苹果设备无法上传文件至 `/sdcard/Download`； |
+| 自动重命名 | 支持上传APK.1的文件自动改名回正确的 `.apk` |
+| 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download，两路按规范化路径去重后合并 |
 | 一键安装 | 用 `file://` + `PackageInstallerActivity` 调起系统安装界面，用户点「继续 → 更新」 |
 | 连接复用 | 一个 App 会话只与车机握手一次，后续安装复用同一条 adb 连接，避免每次点安装都弹 USB 调试授权 |
 | 判定处理 | 支持文件的判定由客户端改为服务端。在Web判定仅允许APK APK.1文件上传 |
@@ -22,11 +29,11 @@
 
 ## 安装
 
-首先需要获取车机的ADB权限，如果没有权限则无法安装此软件。
+首先需要获取车机的ADB权限，如无ADB权限则无法安装此软件。
 
-去 [Releases](../../releases) 下载对应版本的 APK，拷到车机 `Download` 后用AM方式安装即可。装过旧版的直接**覆盖安装**，不用卸载。
+在 [Releases](../../releases) 下载对应版本的 APK，拷到车机 `Download` 后用AM方式安装即可。
 
-首次使用需要在车机上放行一次 USB 调试：弹窗只有键盘能操作（`TAB → ↑ → 回车（勾一律允许）→ ↓ → 回车`）。
+首次使用需要在车机上放行一次 USB 调试，勾选始终允许。
 
 > 已知：车机 ROM 把 `/data/misc/adb/adb_keys` 写坏了（`adbd` 报 `Invalid base64 key`），勾「一律允许」也只对当前会话有效，冷启动后的第一次连接仍要再允许一次。这是固件问题，App 侧只能保证「一次会话最多弹一次」。
 
