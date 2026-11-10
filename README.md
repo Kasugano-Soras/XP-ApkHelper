@@ -3,8 +3,8 @@
 ## 来历
 
 本项目基于焕芯8295P_车友群内大佬分享的 `p7安装器1.0.apk`原版上传页面的文件选择框把 `accept` 写为
-`.apk,application/vnd.android.package-archive`：苹果设备无法识别 `.apk` 这个类型，会把文件当作
-`public.data` 处理，不匹配白名单，APK 在选择器里直接被置灰，导致苹果设备无法上传任何文件；
+`.apk,application/vnd.android.package-archive`：APPLE设备无法识别 `.apk` 这个类型，会把文件当作
+`public.data` 处理，不匹配白名单，APK 在选择器里直接被置灰，导致APPLE设备无法上传任何文件；
 前期版本主要修改的地方是把 `accept` 放宽，真正限制类型的地方挪到页面 JS 的后缀校验和车机端的 400 白名单，两端就都能选文件，而落到车机上的仍只可能是 `.apk`。
 本仓库在原版基础上持续更新，具体改动见下方功能与 [更新日志](更新日志.md)。
 
@@ -18,7 +18,7 @@
 
 | 新增功能 | 说明 |
 |---|---|
-| APPKE设备支持 | 修复苹果设备无法上传文件至 `/sdcard/Download`； |
+| APPLE设备支持 | 修复苹果设备无法上传文件至 `/sdcard/Download`； |
 | 自动重命名 | 支持上传APK.1的文件自动改名回正确的 `.apk` |
 | 列出 Download 全部 APK | 首页扫描 `/sdcard/Download`、`/storage/emulated/0/Download`、`/sdcard`，同时用调试连接 `ls` 一遍 Download，两路按规范化路径去重后合并 |
 | 一键安装 | 用 `file://` + `PackageInstallerActivity` 调起系统安装界面，用户点「继续 → 更新」 |
