@@ -3,8 +3,8 @@
 ## 来历
 本项目基于焕芯8295P_车友群内大佬分享的 `p7安装器1.0.apk`
 该版本WEB上传页的文件选择框把 `accept` 写为`.apk,application/vnd.android.package-archive`
-Apple设备不认这个类型，会把文件当作`public.data` 处理，APK 在选择器里被置灰，导致无法上传文件，基于此，故发布更新版本。
-更新版本主要修改了 `accept` 与 `application/octet-stream`，将真正限制类型的地方挪到页面 JS 的后缀校验和车机端的400白名单校验。另外支持上传微信下载的`.apk.1`文件，自动重命名为正确后缀。同时新增一些小功能
+Apple设备不认这个类型，会把文件当作`public.data` 处理，APK在选择器里被置灰导致无法上传文件，基于此发布更新版本。
+更新版本主要修改了 `accept` 与 `application/octet-stream`，将真正限制类型的地方挪到页面 JS 的后缀校验和车机端的400白名单校验。另支持上传微信下载的`.apk.1`文件，自动重命名为正确后缀。同时新增一些小功能
 
 
 ## 简介
