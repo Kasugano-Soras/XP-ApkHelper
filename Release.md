@@ -1,4 +1,4 @@
-# GitHub Release 说明（复制用）
+#说明
 
 建 Release 时：**Tag** 填下表对应值（会自动新建）、**Target** 选 `main`、标题填版本号、正文复制对应代码块、附件上传对应 APK。
 
