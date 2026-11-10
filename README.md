@@ -3,10 +3,7 @@
 给小鹏 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。
 
 车机（E28U / `au8295_xp`，Android 12）**不允许 `adb install`**（`isPlatSigned:false`），也没有 root，所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
-
-- 包名 `com.dsh.apkhelper` · minSdk 23 · targetSdk 30
-- 当前版本 **1.20**（versionCode 6）
-- 签名证书 SHA-256 `a6196bc28aa7681fdced7c41b47264e1b7d8d45ebcc38c18a49bdc071e5341ff`（全系一致，可覆盖升级）
+软件仅在小鹏P7（SA8295P）换芯版通过测试，其他机型请自测，不保证可用性。
 
 ## 功能
 
@@ -50,29 +47,6 @@
 | `sync.ps1` | 提交并推送的辅助脚本 |
 | `patch_*.py` / `parse_*.py` / `verify*.py` | 改包、解析 AXML/DEX、校验用的脚本 |
 
-## 构建
-
-没有 Gradle 工程，产物是「反编译现有的包 → 改 smali/资源 → 重新组装 → 签名」：
-
-```powershell
-java -jar apktool_3.0.3.jar b decode -o build\apkhelper-1.20-test.apk
-python -X utf8 build\assemble_res.py            # aapt2 组装资源 + 合并 classes.dex
-# uber-apk-signer 签名（需自备密钥库，见下）
-```
-
-三个必须知道的约束：
-
-- **aapt2 不认中文路径**，中间产物必须放到纯 ASCII 的暂存目录；
-- targetSdk ≥ 30 时 `resources.arsc` 与 `res/**` 必须以 `ZIP_STORED` 且 4 字节对齐写入，否则 `adb install` 报 `requires the resources.arsc ... stored uncompressed and aligned`；
-- 密钥库 `dsh-release.jks` **不在本仓库**（`.gitignore` 排除）。想签出能覆盖升级的包，必须用同一张证书；换成别的证书就只能先卸载旧版。
-
-细节见 [`BUILD.md`](BUILD.md)。
-
-## 已知限制
-
-- **Android 16 上点「安装」会失败**，报 `PackageInstallerActivity` 不存在——新系统换了安装界面的组件名，代码里写死的是旧地址。车机是 Android 12，不受影响。
-- **做不了热更新**：车机无 root、无系统签名，替换已安装 APK 这条路不通，只能「下载新包 → 覆盖安装」。
-- 上传服务是明文 HTTP，只适合局域网/热点内使用，不要暴露到公网。
 
 ## 版本
 
