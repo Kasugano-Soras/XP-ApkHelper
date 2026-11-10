@@ -2,12 +2,12 @@
 
 ## 来历
 本项目基于焕芯8295P_车友群内大佬分享的 `p7安装器1.0.apk`
-原版上传页面的文件选择框把 `accept` 写为`.apk,application/vnd.android.package-archive`：APPLE设备无法识别 `.apk` 这个类型，
-会把文件当作`public.data` 处理，APK 在选择器里被置灰，导致APPLE设备无法上传文件；
-前期版本主要修改了 `accept` 将真正限制类型的地方挪到页面 JS 的后缀校验和车机端的 400 白名单。
+原版上传页面的文件选择框把 `accept` 写为`.apk,application/vnd.android.package-archive`：APPLE设备不认这个类型，
+会把文件当作`public.data` 处理，APK 在选择器里被置灰，导致无法上传文件；
+1.1版本主要修改了 `accept` 补上 `application/octet-stream`，将真正限制类型的地方挪到页面 JS 的后缀校验和车机端的 400 白名单。
 
-
-给 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。同时支持上传微信下载的APK.1文件，自动重命名为正确后缀。
+## 简介
+给 P7 车机用的 APK 安装小工具：手机浏览器把 APK 传进车机 `Download`，车机上点一下就能装。同时支持上传微信下载的`.apk.1`文件，自动重命名为正确后缀。
 
 由于车机**不允许 `adb install`**（`isPlatSigned:false`），所以第三方 APK 只能走「App 内把文件落到 Download → 再调系统安装界面」这条路。这个 App 就是把这套流程做成一个界面。
 
