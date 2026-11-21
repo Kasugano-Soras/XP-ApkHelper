@@ -1,0 +1,25 @@
+name: Sync clean 2.0 source asset
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "XPHelper-2.0-source.zip"
+      - ".github/workflows/replace-2.0-source-asset.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: clean-2.0-source-asset
+  cancel-in-progress: false
+
+jobs:
+  replace-source-asset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace the 2.0 source archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload 2.0 XPHelper-2.0-source.zip --clobber --repo Kasugano-Soras/XPHelper

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F5F7F8">
+<title>传到车机 · 鹏友助手</title>
+<style>
+:root{color-scheme:light;--bg:#f5f7f8;--surface:#fff;--surface-soft:#f7f9fa;--ink:#172c32;--muted:#52666c;--faint:#718187;--line:#e3e9eb;--accent:#007f68;--accent-hover:#006953;--accent-soft:#e8f5f0;--danger:#b83a35;--danger-soft:#fff0ee;--shadow:0 12px 40px rgba(21,48,53,.045)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;min-height:100svh}
+button,input{font:inherit}button,a,label{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,a:focus-visible,.dropzone:focus-within{outline:3px solid var(--accent);outline-offset:5px}
+button{transition:background .16s,transform .16s}button:not(:disabled):active{transform:translateY(1px)}
+svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+[hidden]{display:none!important}
+.shell{width:min(1080px,100%);margin:auto;padding:0 40px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:32px}
+.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:650;letter-spacing:.02em}
+.brand img{display:block;width:36px;height:36px;flex:none}
+.network{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+.network svg{width:17px;height:17px;color:var(--accent)}
+main{padding:66px 0 48px}
+.eyebrow{margin:0 0 12px;color:var(--accent);font-size:12px;letter-spacing:.16em;font-weight:700}
+h1{font-size:42px;line-height:1.25;letter-spacing:-.035em;margin:0 0 17px;font-weight:720}
+h1 span{display:inline-block}
+.intro{margin:0;color:var(--muted);font-size:16px}
+.workspace{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr);gap:24px;margin-top:34px;align-items:start}
+.upload-card,.guide{background:var(--surface);border:1px solid var(--line);border-radius:22px}
+.upload-card{padding:28px;box-shadow:var(--shadow)}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+h2{font-size:17px;line-height:1.4;font-weight:650;margin:0}
+.file-type{font-size:11px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:7px}
+.dropzone{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;border:1.5px dashed #bacbc9;background:var(--surface-soft);border-radius:15px;padding:37px 18px 29px;cursor:pointer;transition:border-color .16s,background .16s}
+.dropzone:hover,.dropzone.dragging{border-color:var(--accent);background:var(--accent-soft)}
+.upload-icon{display:grid;place-items:center;width:64px;height:64px;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--accent);margin-bottom:19px}
+.upload-icon svg{width:31px;height:31px}
+.drop-title{font-size:19px;line-height:1.4;font-weight:650}
+.drop-copy{margin-top:7px;color:var(--muted);font-size:13px}
+.choose{display:inline-flex;align-items:center;gap:12px;margin-top:23px;padding:9px 17px;background:var(--surface);border:1px solid var(--line);border-radius:9px;font-size:14px;font-weight:600}
+.choose svg{width:15px;height:15px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.selection{display:flex;align-items:center;gap:13px;padding:17px 0 0}
+.apk-icon{display:grid;place-items:center;width:44px;height:48px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:750;letter-spacing:.05em;flex-shrink:0}
+.file-details{min-width:0;flex:1}
+.filename{display:block;font-weight:600;overflow-wrap:anywhere;line-height:1.5;font-size:14px}
+.file-meta{margin-top:2px;font-size:12px;color:var(--muted)}
+.text-button{border:0;color:var(--accent);background:transparent;padding:8px 0 8px 12px;font-size:13px;flex-shrink:0}
+.text-button:disabled{color:var(--faint)}
+.rename{font-size:12px;color:var(--muted);margin:12px 0 0;overflow-wrap:anywhere}
+.error{margin:16px 0 0;padding:11px 13px;border-radius:9px;background:var(--danger-soft);color:var(--danger);font-size:13px;overflow-wrap:anywhere}
+.progress-area{margin-top:22px}
+.progress-labels{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);margin-bottom:8px}
+.progress-labels strong{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.progress-track{height:6px;border-radius:99px;overflow:hidden;background:var(--line)}
+.progress-fill{height:100%;width:0;border-radius:99px;background:var(--accent);transition:width .18s ease}
+.status{font-size:13px;color:var(--muted);margin:10px 0 0;overflow-wrap:anywhere;min-height:22px}
+.status.success{color:var(--accent)}
+.submit{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:51px;border:0;border-radius:11px;color:#fff;background:var(--accent);margin-top:23px;font-weight:600}
+.submit:not(:disabled):hover{background:var(--accent-hover)}
+.submit:disabled{background:var(--line);color:var(--faint)}
+.submit.busy{background:var(--accent);color:#fff;opacity:.72}
+.submit svg{width:19px;height:19px}
+.privacy{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--faint);font-size:11px;margin:13px 0 0}
+.privacy svg{width:13px;height:13px}
+.guide{padding:25px 25px 23px}
+.guide h2{font-size:16px}
+.steps{list-style:none;padding:0;margin:25px 0 0;counter-reset:step}
+.steps li{position:relative;display:flex;align-items:flex-start;gap:12px;counter-increment:step;padding-bottom:26px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:counter(step);width:25px;height:25px;flex-shrink:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font-size:11px;font-weight:650;color:var(--accent);background:var(--surface);z-index:1}
+.steps li:not(:last-child)::after{content:"";position:absolute;width:1px;background:var(--line);left:12px;top:29px;bottom:4px}
+.steps strong{display:block;font-size:14px;line-height:25px;font-weight:600}
+.steps p{font-size:12px;color:var(--muted);line-height:1.8;margin:4px 0 0}
+.help{padding:19px 3px 0;color:var(--muted);font-size:12px;line-height:1.85}
+.help-title{display:flex;align-items:center;gap:7px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.help-title svg{width:16px;height:16px;color:var(--faint)}
+.help p{margin:0}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 0 27px;border-top:1px solid var(--line);font-size:11px;color:var(--faint)}
+.footer a{color:var(--muted);text-decoration:none}.footer a:hover{text-decoration:underline}
+.noscript{padding:15px;color:var(--danger)}
+@media(min-width:900px){.side{padding-top:0}}
+@media(max-width:760px){.shell{padding:0 22px}.topbar{padding-top:23px}.network{font-size:11px;gap:5px}.brand{font-size:16px;gap:9px}.brand img{width:32px;height:32px}main{padding:43px 0 34px}h1{font-size:33px;line-height:1.3;margin-bottom:13px}.intro{font-size:14px;max-width:31em}.workspace{grid-template-columns:minmax(0,1fr);gap:22px;margin-top:27px}.upload-card{padding:21px;border-radius:18px}.dropzone{padding:30px 13px 24px}.drop-title{font-size:17px}.drop-copy{font-size:12px}.upload-icon{width:58px;height:58px;margin-bottom:16px}.guide{padding:22px}.steps{margin-top:21px}.steps li{padding-bottom:20px}.help{padding:17px 3px 0}.footer{align-items:flex-start;font-size:10px;padding-bottom:22px}.footer span{max-width:65%}}
+@media(max-width:360px){.shell{padding:0 16px}.network span{display:none}h1{font-size:29px}.upload-card{padding:17px}.choose{padding:9px 14px}.privacy{font-size:10px}}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#12191c;--surface:#1b2428;--surface-soft:#172024;--ink:#e1ebeb;--muted:#a8b8bd;--faint:#8c9da3;--line:#334146;--accent:#39cba3;--accent-hover:#4ad9b2;--accent-soft:#203e36;--danger:#ffb4a8;--danger-soft:#3e2727;--shadow:none}.dropzone{border-color:#53675f}.submit{color:#112c24}.submit.busy{color:#112c24}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><img src="brand-logo.png" width="36" height="36" alt=""><span>鹏友助手</span></div>
+    <div class="network"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a15 15 0 0 1 18 0M6 12a10 10 0 0 1 12 0m-9 4a5 5 0 0 1 6 0"/><circle cx="12" cy="20" r=".6"/></svg><span>局域网直传</span></div>
+  </header>
+  <main>
+    <p class="eyebrow">PHONE → CAR</p>
+    <h1>安装包，<span>轻松传到车机。</span></h1>
+    <p class="intro">选择手机或电脑上的 APK，上传后即可在车机安装。</p>
+    <div class="workspace">
+      <section class="upload-card" aria-labelledby="upload-heading">
+        <div class="section-heading"><h2 id="upload-heading">上传安装包</h2><span class="file-type">APK / APK.1</span></div>
+        <form id="upload-form">
+          <label class="dropzone" id="dropzone" for="f">
+            <span class="upload-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 22V5m-6 6 6-6 6 6M6 21v6h20v-6"/><path d="M5 16v-3a3 3 0 0 1 3-3h2m12 0h2a3 3 0 0 1 3 3v3"/></svg></span>
+            <span class="drop-title" id="drop-title">点击选择，或拖放到这里</span>
+            <span class="drop-copy">支持 .apk 和微信下载的 .apk.1 文件</span>
+            <span class="choose">选择安装包 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+            <input class="sr-only" id="f" type="file" accept=".apk,.apk.1,application/vnd.android.package-archive,application/octet-stream" aria-label="选择 APK 安装包">
+          </label>
+          <div class="selection" id="selection" hidden>
+            <span class="apk-icon" aria-hidden="true">APK</span>
+            <div class="file-details"><span class="filename" id="filename"></span><div class="file-meta" id="file-meta"></div></div>
+            <button class="text-button" id="change" type="button">更换</button>
+          </div>
+          <p class="rename" id="rename" hidden></p>
+          <p class="error" id="error" role="alert" hidden></p>
+          <div class="progress-area" id="progress-area" hidden>
+            <div class="progress-labels"><span id="progress-copy">准备就绪</span><strong id="percent">0%</strong></div>
+            <div class="progress-track" id="progress" role="progressbar" aria-label="上传进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+            <p class="status" id="s" role="status" aria-live="polite"></p>
+          </div>
+          <button class="submit" id="upload" type="submit" disabled><span id="upload-label">开始上传</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M5 15v6h14v-6"/></svg></button>
+          <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 3v6c0 4-4 7-8 9-4-2-8-5-8-9V6Zm-3 9 2 2 4-4"/></svg>文件直接传至车机，不经过云端</p>
+        </form>
+      </section>
+      <aside class="side">
+        <section class="guide" aria-labelledby="guide-heading">
+          <h2 id="guide-heading">三步，完成传输与安装</h2>
+          <ol class="steps">
+            <li><div><strong>连接同一网络</strong><p>手机与车机连接同一 Wi-Fi，或连接车机热点。</p></div></li>
+            <li><div><strong>选择文件并上传</strong><p>安装包会保存到车机 Download 目录，.apk.1 自动改为 .apk。</p></div></li>
+            <li><div><strong>回到车机完成安装</strong><p>打开「安装包管理」，刷新列表，找到文件后点击安装。</p></div></li>
+          </ol>
+        </section>
+        <section class="help">
+          <div class="help-title"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 2-2.5 2-2.5 4m0 3h.01"/></svg>上传没有响应？</div>
+          <p>请保持车机停留在「文件传输」页面，并检查两台设备是否仍在同一网络。传输过程中请勿关闭此网页。</p>
+        </section>
+      </aside>
+    </div>
+    <noscript><p class="noscript">请在浏览器中启用 JavaScript 后上传安装包。</p></noscript>
+  </main>
+  <footer class="footer"><span>鹏友助手 · 为车机准备的文件传输工具</span><a href="https://github.com/Kasugano-Soras/XPHelper" target="_blank" rel="noopener noreferrer">开源项目 ↗</a></footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var input = $("f"), dropzone = $("dropzone"), file = null, busy = false, xhr = null, depth = 0;
+  // Keep Android file pickers unrestricted; validate names here AND on the car.
+  // Keep the original accept list for Apple devices.
+  if (navigator.userAgent.indexOf("Android") >= 0) {
+    input.removeAttribute("accept");
+    $("drop-title").textContent = "选择手机里的安装包";
+  }
+  function size(value) {
+    return value < 1048576 ? (value / 1024).toFixed(1) + " KB" : (value / 1048576).toFixed(1) + " MB";
+  }
+  function progress(value) {
+    value = Math.max(0, Math.min(100, Math.round(value)));
+    $("percent").textContent = value + "%";
+    $("progress-fill").style.width = value + "%";
+    $("progress").setAttribute("aria-valuenow", String(value));
+  }
+  function error(message) {
+    $("error").textContent = message;
+    $("error").hidden = !message;
+  }
+  function setBusy(value) {
+    busy = value;
+    input.disabled = value;
+    $("change").disabled = value;
+    $("upload").disabled = value || !file;
+    $("upload").classList.toggle("busy", value);
+    $("upload-form").setAttribute("aria-busy", value ? "true" : "false");
+  }
+  function reject(message) {
+    file = null;
+    input.value = "";
+    $("selection").hidden = true;
+    $("rename").hidden = true;
+    $("progress-area").hidden = true;
+    setBusy(false);
+    error(message);
+  }
+  function select(files) {
+    if (busy || !files || !files.length) return;
+    if (files.length > 1) { reject("每次上传一个安装包，请重新选择。"); return; }
+    var chosen = files[0], name = chosen.name.toLowerCase();
+    if (name.slice(-4) !== ".apk" && name.slice(-6) !== ".apk.1") {
+      reject("只支持 .apk 或 .apk.1 文件，请选择正确的安装包。");
+      return;
+    }
+    file = chosen;
+    error("");
+    $("filename").textContent = file.name;
+    $("file-meta").textContent = size(file.size) + " · Android 安装包";
+    $("selection").hidden = false;
+    $("rename").hidden = name.slice(-6) !== ".apk.1";
+    $("rename").textContent = "上传后自动保存为 " + file.name.replace(/\.apk\.1$/i, ".apk");
+    $("progress-area").hidden = true;
+    $("s").textContent = "";
+    $("s").className = "status";
+    $("progress-copy").textContent = "准备就绪";
+    $("upload-label").textContent = "开始上传";
+    progress(0);
+    setBusy(false);
+  }
+  function fail(message) {
+    setBusy(false);
+    error(message);
+    $("s").textContent = "文件尚未确认保存，可重新上传。";
+    $("s").className = "status";
+    $("upload-label").textContent = "重新上传";
+  }
+  function up() {
+    if (busy) return;
+    if (!file) { error("请先选择一个 APK 安装包。"); return; }
+    error("");
+    setBusy(true);
+    $("progress-area").hidden = false;
+    $("progress-copy").textContent = "0.0 / " + (file.size / 1048576).toFixed(1) + " MB";
+    $("upload-label").textContent = "正在上传…";
+    $("s").className = "status";
+    $("s").textContent = "正在传输，请保持车机文件传输页面打开。";
+    progress(0);
+    xhr = new XMLHttpRequest();
+    // Preserve the server's raw-body API and original filename encoding.
+    xhr.open("POST", "/upload?name=" + encodeURIComponent(file.name));
+    xhr.timeout = 300000;
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
+    xhr.upload.onprogress = function (event) {
+      if (!event.lengthComputable) return;
+      progress(event.total ? event.loaded / event.total * 100 : 0);
+      $("progress-copy").textContent = (event.loaded / 1048576).toFixed(1) + " / " + (event.total / 1048576).toFixed(1) + " MB";
+      if (event.loaded === event.total) $("s").textContent = "文件已发送，等待车机确认保存…";
+    };
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        setBusy(false);
+        progress(100);
+        $("progress-copy").textContent = "传输完成";
+        $("s").className = "status success";
+        $("s").textContent = xhr.responseText || "上传成功，请回到车机「安装包管理」页面安装。";
+        $("upload-label").textContent = "再次上传";
+      } else {
+        fail(xhr.responseText || "上传失败（HTTP " + xhr.status + "），请重试。");
+      }
+    };
+    xhr.onerror = function () { fail("连接中断，请确认车机页面已打开，并检查 Wi-Fi 后重试。"); };
+    xhr.ontimeout = function () { fail("上传超时，请检查网络后重试。"); };
+    xhr.onabort = function () { fail("传输已中断，请重新上传。"); };
+    try { xhr.send(file); } catch (exception) { fail("无法开始上传，请检查网络后重试。"); }
+  }
+  input.addEventListener("change", function () { select(input.files); });
+  $("change").addEventListener("click", function () { if (!busy) input.click(); });
+  $("upload-form").addEventListener("submit", function (event) { event.preventDefault(); up(); });
+  dropzone.addEventListener("dragenter", function (event) { event.preventDefault(); if (!busy) { depth++; dropzone.classList.add("dragging"); } });
+  dropzone.addEventListener("dragover", function (event) { event.preventDefault(); });
+  dropzone.addEventListener("dragleave", function (event) { event.preventDefault(); depth = Math.max(0, depth - 1); if (!depth) dropzone.classList.remove("dragging"); });
+  dropzone.addEventListener("drop", function (event) { event.preventDefault(); depth = 0; dropzone.classList.remove("dragging"); if (!busy) select(event.dataTransfer.files); });
+  window.addEventListener("dragover", function (event) { event.preventDefault(); });
+  window.addEventListener("drop", function (event) { event.preventDefault(); });
+  window.addEventListener("beforeunload", function (event) { if (busy) { event.preventDefault(); event.returnValue = ""; } });
+  window.up = up;
+}());
+</script>
+</body>
+</html>
